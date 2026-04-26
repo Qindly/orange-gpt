@@ -25,6 +25,10 @@ export class ChatController {
     try {
       // 把用户消息保存到数据库
       const lastMessage = messages[messages.length - 1];
+      if (!messages || messages.length === 0) {
+        res.write(`data: ${JSON.stringify({ error: '消息列表不能为空' })}\n\n`);
+        return res.end();
+      }
       await this.chatService.saveMessage(conversationId, lastMessage.role, lastMessage.content);
 
       // 收集回复数据，进行存储

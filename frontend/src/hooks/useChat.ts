@@ -1,4 +1,4 @@
-import {  useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { useChatStore } from '../stores/chatStore';
 
 
@@ -70,37 +70,36 @@ export const useChat = () => {
 
       if (!reader) throw new Error('No reader');
 
+      let buffer = '';
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
 
-        const text = decoder.decode(value);
-        // SSE 格式: "data: {...}\n\n"，可能一次收到多条
-        /*
-        例如：
-        data: {"content":"Hel"}\n\ndata: {"content":"lo world!"} \n\n
-        */
-        // 为什么用的是 '\n' 而不是 '\n\n'？
-        const lines = text.split('\n').filter((line) => line.startsWith('data: '));
+        buffer += decoder.decode(value, { stream: true });
+        const parts = buffer.split('\n\n');
+        buffer = parts.pop() ?? ''; // 最后一部分可能不完整，保留在 buffer 中
+        for (const part of parts) {
+          const lines = part.split('\n').filter((line) => line.startsWith('data: '));
 
-        for (const line of lines) {
-          const data = line.slice(6);
-          // 去掉 "data: "
-          if (data === '[DONE]') break;
+          for (const line of lines) {
+            const data = line.slice(6);
+            // 去掉 "data: "
+            if (data === '[DONE]') break;
 
-          try {
-            const parsed = JSON.parse(data);
-            if (parsed.content) {
-              // 5. 将新内容追加到 assistant 消息中
-              assistantMessage.content += parsed.content;
-              // 6. 更新消息列表（替换最后一条）
-              const currentMessages = useChatStore.getState().messages;
-              store.set.messages(
-                currentMessages.map((msg) => (msg.id === assistantMessage.id ? assistantMessage : msg))
-              );
+            try {
+              const parsed = JSON.parse(data);
+              if (parsed.content) {
+                // 5. 将新内容追加到 assistant 消息中
+                assistantMessage.content += parsed.content;
+                // 6. 更新消息列表（替换最后一条）
+                const currentMessages = useChatStore.getState().messages;
+                store.set.messages(
+                  currentMessages.map((msg) => (msg.id === assistantMessage.id ? assistantMessage : msg))
+                );
+              }
+            } catch {
+              // 忽略解析失败的行
             }
-          } catch {
-            // 忽略解析失败的行
           }
         }
       }
