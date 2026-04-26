@@ -1,4 +1,29 @@
+# 依赖
 node_modules
+
+# 构建产物
 dist
+
+# 环境变量（含 API Key，绝对不能提交）
 .env
+backend/.env
+
+# IDE
+.vscode
+.idea
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# Docker 数据卷
+pgdata
+
+# 日志
+*.log
+
+# Prisma 生成的客户端（会在构建时自动生成）
+backend/node_modules/.prisma
+
 test.http
+AGENTS.md
