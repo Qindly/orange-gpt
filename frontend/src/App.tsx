@@ -3,6 +3,7 @@ import { useChat } from './hooks/useChat';
 import { useConversation } from './hooks/useConversation';
 import Sidebar from './components/Sidebar/index';
 import { useChatStore } from './stores/chatStore';
+import { Markdown } from './components/Markdown/index';
 import './App.scss';
 
 const App = () => {
@@ -53,7 +54,9 @@ const App = () => {
                 {msg.role === 'user' ? '👤' : '🤖'}
               </div>
               <div className="message__content">
-                {msg.content || (isLoading ? '思考中...' : '')}
+                <Markdown>
+                  {msg.content || (isLoading ? '思考中...' : '')}
+                </Markdown>
               </div>
             </div>
           ))}

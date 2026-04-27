@@ -92,12 +92,13 @@ Apply
     }
   }
 
-  &--assistant {
+    &--assistant {
     .message__content {
       background: #fff;
       color: #333;
       border: 1px solid #e5e5e5;
       border-bottom-left-radius: 4px;
+      white-space: normal;
     }
   }
 }
