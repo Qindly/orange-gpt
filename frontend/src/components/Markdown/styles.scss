@@ -1,0 +1,125 @@
+.markdown-body {
+  line-height: 1.7;
+  font-size: 14px;
+  word-break: break-word;
+
+  // 段落
+  p {
+    margin: 8px 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // 标题
+  h1, h2, h3, h4, h5, h6 {
+    margin: 16px 0 8px;
+    font-weight: 600;
+  }
+
+  h1 { font-size: 1.4em; }
+  h2 { font-size: 1.25em; }
+  h3 { font-size: 1.1em; }
+
+  // 行内代码
+  .inline-code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    color: #e74c3c;
+  }
+
+  // 代码块
+  .code-block-wrapper {
+    margin: 12px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #1e1e1e;
+
+    pre {
+      margin: 0;
+      padding: 16px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+      font-family: 'Fira Code', 'Consolas', monospace;
+
+      code {
+        background: none;
+        padding: 0;
+        color: #d4d4d4;
+      }
+    }
+  }
+
+  // 列表
+  ul, ol {
+    margin: 8px 0;
+    padding-left: 24px;
+  }
+
+  li {
+    margin: 4px 0;
+  }
+
+  // 引用
+  blockquote {
+    margin: 8px 0;
+    padding: 8px 16px;
+    border-left: 4px solid #007aff;
+    background: #f5f8ff;
+    color: #555;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  // 表格
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: left;
+  }
+
+  th {
+    background: #f5f5f5;
+    font-weight: 600;
+  }
+
+  // 分割线
+  hr {
+    margin: 16px 0;
+    border: none;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  // 链接
+  a {
+    color: #007aff;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  // 图片
+  img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+}
