@@ -1,20 +1,6 @@
+import type {  Conversation } from '../type/type'
 //写用于请求相关的函数。
 const BASE = '/api';
-
-export interface Message {
-    id: string;
-    role: 'user' | 'assistant';
-    content: string;
-    createdAt: string;
-}
-
-export interface Conversation {
-    id: string;
-    title: string;
-    createdAt: string;
-    updatedAt: string;
-    messages: Message[];
-}
 
 export const api = {
     //获取对话列表
@@ -67,23 +53,13 @@ export const api = {
             method: 'DELETE',
         });
         if (!response.ok) {
+            console.error(response);
             throw new Error('Failed to delete conversation');
+            
         }
     },
 
 
-    // //发送消息并获取流式响应
-    // async sendMessage(conversationId: string, content: string, onMessage: (message: Message) => void, signal: AbortSignal): Promise<void> {
-    //     const response = await fetch(`${BASE}/chat`, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({
-    //             conversationId,
-    //             content,
-    //         }),
-    //     });
-    // }
+
 
 }

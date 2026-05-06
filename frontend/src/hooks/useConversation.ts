@@ -25,9 +25,32 @@ export const useConversation = () => {
     set.currentId(id);
     set.messages([]);
     const data = await api.fetchConversation(id);
+
     if (data.messages) {
       set.messages(data.messages);
+      const last = data.messages.at(-1);
+      if (last?.role === 'user') {
+        const timer = setInterval(async () => {
+          if (useChatStore.getState().currentId !== id) {
+            clearInterval(timer)
+            return;
+          }
+          const res = await api.fetchConversation(id);
+          if (res.messages && res.messages.at(-1)?.role === 'assistant') {
+            console.log('拿到 assistant 回复了', res.messages)
+            set.messages(res.messages);
+            clearInterval(timer);
+          }
+        }, 2000)
+
+        setTimeout(() => {
+          if (timer) {
+            clearInterval(timer)
+          }
+        }, 30000);
+      }
     }
+
   }, []);
 
   const deleteConversation = useCallback(async (id: string) => {
