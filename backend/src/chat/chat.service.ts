@@ -44,7 +44,7 @@ export class ChatService {
   /** 流式调用，返回 AsyncIterable */
   async *streamChat(messages: ChatMessage[]) {
     const stream = await this.openai.chat.completions.create({
-      model: 'gpt-5.3-codex', // 你可以换成你的中转支持的模型
+      model: 'gpt-5.5', // 你可以换成你的中转支持的模型
       messages,
       stream: true,
     });

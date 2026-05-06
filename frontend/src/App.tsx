@@ -40,7 +40,7 @@ const App = () => {
 
       <div className="chat-app">
         <header className="chat-header">
-          <h1>🍊 Orange ChatGPT</h1>
+          <h1>🍊 Orange ChatGPT3</h1>
         </header>
 
         <main className="chat-messages">

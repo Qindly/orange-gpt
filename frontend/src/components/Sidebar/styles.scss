@@ -32,6 +32,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
     padding: 10px 12px;
     border-radius: 8px;
     cursor: pointer;
@@ -48,25 +49,58 @@
 
   &__item-title {
     flex: 1;
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  &__item-delete {
+  &__item-input {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid #555;
+    border-radius: 6px;
+    background: #151515;
+    color: #fff;
+    font-size: 13px;
+    outline: none;
+    padding: 5px 6px;
+
+    &:focus {
+      border-color: #888;
+    }
+  }
+
+  &__item-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0;
+
+    .sidebar__item:hover &,
+    .sidebar__item--active & {
+      opacity: 1;
+    }
+  }
+
+  &__item-action {
     background: none;
     border: none;
     color: #888;
     cursor: pointer;
     font-size: 12px;
     padding: 2px 6px;
-    opacity: 0;
-
-    .sidebar__item:hover & {
-      opacity: 1;
-    }
 
     &:hover {
+      color: #fff;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    &--danger:hover {
       color: #ff4444;
     }
   }

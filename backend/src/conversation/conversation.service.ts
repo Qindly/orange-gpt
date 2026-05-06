@@ -31,8 +31,10 @@ export class ConversationService {
     }
 
     remove(id: string) {
-        return this.prisma.conversation.delete({
-            where: { id },
-        });
+        return this.prisma.$transaction([
+            this.prisma.message.deleteMany({ where: { conversationId: id } }),
+            this.prisma.conversation.delete({ where: { id } }),
+        ]);
+
     }
 }

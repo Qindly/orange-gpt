@@ -10,13 +10,14 @@ services:
     ports:
       - "5433:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
       interval: 3s
       timeout: 5s
       retries: 10
 
   backend:
     build: ./backend
+    restart: on-failure
     depends_on:
       db:
         condition: service_healthy
@@ -26,13 +27,20 @@ services:
       OPENAI_BASE_URL: ${OPENAI_BASE_URL}
     ports:
       - "3000:3000"
+    volumes:
+      - ./backend/src:/app/src
+    command: pnpm run start:dev
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
     depends_on:
       - backend
     ports:
       - "80:80"
-
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 volumes:
   pgdata:
